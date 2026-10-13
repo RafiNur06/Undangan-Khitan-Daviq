@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#b2d4d8">
+  <title>Undangan Khitanan Daviq Mulya Virendra</title>
+  <style>
+    :root {
+      --biru: #b2d4d8;
+      --biru-tua: #244563;
+      --kuning: #ffdc79;
+      --putih: #fffdf5;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-snap-type: y mandatory; }
+    body {
+      margin: 0;
+      background: #edf0f1;
+      color: var(--biru-tua);
+      font-family: Arial, sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Satu halaman web = satu halaman desain Canva. Rasio mengikuti desain vertikal. */
+    .page {
+      position: relative;
+      isolation: isolate;
+      width: min(100%, 420px);
+      aspect-ratio: 2 / 3;
+      margin: 18px auto;
+      overflow: hidden;
+      background: var(--biru);
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      box-shadow: 0 5px 22px rgba(28, 53, 66, .08);
+    }
+
+    .design-video {
+      position: absolute;
+      inset: 0;
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: fill;
+      z-index: 0;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    /* Semua elemen tambahan transparan/terbatas pada halaman yang memang memerlukannya. */
+    .overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .overlay > * { pointer-events: auto; }
+
+    /* Tombol transparan tepat di atas tombol "Undangan Khitan" pada desain halaman 1. */
+    .cover-open {
+      position: absolute;
+      left: 19%;
+      width: 62%;
+      top: 78%;
+      height: 8.5%;
+      border: 0;
+      border-radius: 30px;
+      background: transparent;
+      color: transparent;
+      cursor: pointer;
+    }
+    .cover-open:focus-visible {
+      outline: 3px solid #244563;
+      outline-offset: 2px;
+    }
+
+    /* Halaman 4: koordinat ditampilkan di ruang kosong di bawah ilustrasi rumah.
+       Posisi dapat disesuaikan melalui top di CSS ini. */
+    .location-box {
+      position: absolute;
+      top: 45%;
+      left: 8%;
+      right: 8%;
+      text-align: center;
+      color: var(--biru-tua);
+      font-size: clamp(10px, 3.1vw, 14px);
+      line-height: 1.45;
+    }
+    .location-coordinates {
+      display: inline-block;
+      max-width: 100%;
+      padding: 8px 12px;
+      border-radius: 12px;
+      background: rgba(255, 220, 121, .96);
+      overflow-wrap: anywhere;
+      font-weight: 700;
+    }
+    .map-link {
+      display: inline-block;
+      margin-top: 7px;
+      padding: 7px 12px;
+      border-radius: 18px;
+      color: var(--biru-tua);
+      background: rgba(255, 253, 245, .95);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    /* Halaman 5: countdown diletakkan di bawah judul yang sudah ada di desain Canva. */
+    .countdown-box {
+      position: absolute;
+      top: 23%;
+      left: 7%;
+      right: 7%;
+      text-align: center;
+      color: var(--biru-tua);
+    }
+    .countdown {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 6px;
+    }
+    .countdown-item {
+      padding: 10px 3px;
+      border-radius: 12px;
+      background: rgba(255, 220, 121, .96);
+      box-shadow: 0 2px 5px rgba(36, 69, 99, .08);
+    }
+    .countdown-number {
+      display: block;
+      font-size: clamp(17px, 5vw, 25px);
+      line-height: 1.2;
+      font-weight: 800;
+    }
+    .countdown-label {
+      display: block;
+      margin-top: 4px;
+      font-size: clamp(9px, 2.7vw, 12px);
+      font-weight: 700;
+    }
+    #pesanCountdown {
+      margin: 10px 0;
+      font-size: clamp(10px, 3vw, 13px);
+      font-weight: 700;
+    }
+
+    /* Halaman 6: form berada di ruang kosong di bawah judul desain. */
+    .rsvp-box {
+      position: absolute;
+      top: 20%;
+      left: 8%;
+      right: 8%;
+      max-height: 75%;
+      overflow-y: auto;
+      padding: 12px;
+      border-radius: 15px;
+      background: rgba(255, 253, 245, .94);
+      color: var(--biru-tua);
+    }
+    .form-group { margin: 0 0 10px; }
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      min-height: 39px;
+      padding: 9px 10px;
+      border: 1px solid #9dbfc5;
+      border-radius: 8px;
+      background: white;
+      color: #203b53;
+      font: inherit;
+      font-size: 14px;
+    }
+    .form-group textarea { min-height: 68px; resize: vertical; }
+    .submit-button {
+      width: 100%;
+      min-height: 42px;
+      border: 0;
+      border-radius: 22px;
+      background: var(--kuning);
+      color: var(--biru-tua);
+      font-weight: 800;
+    }
+    #statusRSVP {
+      margin: 8px 0 0;
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    /* Navigasi ringkas di bawah layar. */
+    .navigation {
+      position: fixed;
+      z-index: 20;
+      left: 50%;
+      bottom: max(10px, env(safe-area-inset-bottom));
+      transform: translateX(-50%);
+      display: flex;
+      gap: 6px;
+      padding: 5px;
+      border: 1px solid rgba(36, 69, 99, .15);
+      border-radius: 14px;
+      background: rgba(255, 253, 245, .96);
+      box-shadow: 0 2px 12px rgba(0, 0, 0, .12);
+    }
+    .navigation button {
+      width: 40px;
+      height: 40px;
+      border: 0;
+      border-radius: 9px;
+      background: transparent;
+      color: var(--biru-tua);
+      font-size: 23px;
+      cursor: pointer;
+    }
+    .navigation button:disabled { opacity: .3; cursor: default; }
+
+    @media (max-width: 420px) {
+      .page { width: 100%; margin: 0 auto 14px; }
+      .rsvp-box { padding: 10px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .page { scroll-snap-stop: normal; }
+    }
+  </style>
+</head>
+<body>
+
+  <!--
+    SIAPKAN FILE DESAIN:
+    Ekspor setiap halaman Canva sebagai video MP4, lalu simpan di folder "vidio".
+    Nama file: vidio/1.mp4, vidio/2.mp4, ... sampai vidio/7.mp4.
+  -->
+
+  <!-- HALAMAN 1: desain cover Canva + tombol transparan di atas tombol desain. -->
+  <section class="page" id="cover" aria-label="Sampul undangan">
+    <video class="design-video" autoplay muted loop playsinline preload="metadata" aria-label="Sampul undangan khitanan">
+      <source src="vidio/1.mp4" type="video/mp4">
+      Browser kamu tidak mendukung video.
+    </video>
+    <div class="overlay">
+      <button class="cover-open" type="button" onclick="bukaUndangan()"
+              aria-label="Buka undangan" title="Buka undangan"></button>
+    </div>
+  </section>
+
+  <!-- HALAMAN 2: hanya desain Canva. Tidak ada teks/tombol tambahan. -->
+  <section class="page" id="pembukaan" aria-label="Pembukaan undangan">
+    <video class="design-video" autoplay muted loop playsinline preload="metadata" aria-label="Pembukaan undangan">
+      <source src="vidio/2.mp4" type="video/mp4">
+      Browser kamu tidak mendukung video.
+    </video>
+  </section>
+
+  <!-- HALAMAN 3: hanya desain detail acara dari Canva. Tidak ada elemen tambahan. -->
+  <section class="page" id="detail-acara" aria-label="Detail acara">
+    <video class="design-video" autoplay muted loop playsinline preload="metadata" aria-label="Detail acara">
+      <source src="vidio/3.mp4" type="video/mp4">
+      Browser kamu tidak mendukung video.
+    </video>
+  </section>
+
+  <!-- HALAMAN 4: desain lokasi rumah + koordinat dan tautan peta di bawah rumah. -->
+  <section class="page" id="lokasi" aria-label="Lokasi rumah">
+    <video class="design-video" autoplay muted loop playsinline preload="metadata" aria-label="Ilustrasi lokasi rumah">
+      <source src="vidio/4.mp4" type="video/mp4">
+      Browser kamu tidak mendukung video.
+    </video>
+    <div class="overlay">
+      <div class="location-box">
+        <div class="location-coordinates" id="teksKoordinat">Koordinat rumah belum diatur</div>
+        <br>
+        <a class="map-link" id="tautanMaps" href="#" target="_blank" rel="noopener noreferrer"
+           hidden>Buka Lokasi di Google Maps</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- HALAMAN 5: desain countdown Canva + countdown dinamis di bawah judul. -->
+  <section class="page" id="hitung-mundur" aria-label="Countdown waktu acara">
+    <video class="design-video" autoplay muted loop playsinline preload="metadata" aria-label="Countdown waktu acara">
+      <source src="vidio/5.mp4" type="video/mp4">
+      Browser kamu tidak mendukung video.
+    </video>
+    <div class="overlay">
+      <div class="countdown-box">
+        <div class="countdown">
+          <div class="countdown-item"><span class="countdown-number" id="hari">0</span><span class="countdown-label">Hari</span></div>
+          <div class="countdown-item"><span class="countdown-number" id="jam">00</span><span class="countdown-label">Jam</span></div>
+          <div class="countdown-item"><span class="countdown-number" id="menit">00</span><span class="countdown-label">Menit</span></div>
+          <div class="countdown-item"><span class="countdown-number" id="detik">00</span><span class="countdown-label">Detik</span></div>
+        </div>
+        <p id="pesanCountdown">Atur tanggal dan waktu acara di bagian konfigurasi kode.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- HALAMAN 6: desain RSVP Canva + form nama, kehadiran, dan ucapan/doa. -->
+  <section class="page" id="rsvp" aria-label="Konfirmasi kehadiran">
+    <video class="design-video" autoplay muted loop playsinline preload="metadata" aria-label="Konfirmasi kehadiran">
+      <source src="vidio/7.mp4" type="video/mp4">
+      Browser kamu tidak mendukung video.
+    </video>
+    <div class="overlay">
+      <form class="rsvp-box" id="formRSVP">
+        <div class="form-group">
+          <label for="namaRSVP">Nama</label>
+          <input type="text" id="namaRSVP" name="nama" maxlength="100"
+                 placeholder="Masukkan nama" required>
+        </div>
+        <div class="form-group">
+          <label for="kehadiran">Konfirmasi kehadiran</label>
+          <select id="kehadiran" name="kehadiran" required>
+            <option value="">Pilih jawaban</option>
+            <option value="Hadir">Hadir</option>
+            <option value="Tidak Hadir">Tidak hadir</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="pesanRSVP">Ucapan dan doa</label>
+          <textarea id="pesanRSVP" name="pesan" maxlength="1000"
+                    placeholder="Tuliskan ucapan atau doa (opsional)"></textarea>
+        </div>
+        <button class="submit-button" id="tombolRSVP" type="submit">Kirim Konfirmasi</button>
+        <p id="statusRSVP" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- HALAMAN 7: hanya desain "Terima Kasih" dari Canva. Tidak ada elemen tambahan. -->
+  <section class="page" id="terima-kasih" aria-label="Terima kasih">
+    <video class="design-video" autoplay muted loop playsinline preload="metadata" aria-label="Terima kasih">
+      <source src="vidio/6.mp4" type="video/mp4">
+      Browser kamu tidak mendukung video.
+    </video>
+  </section>
+
+  <nav class="navigation" aria-label="Navigasi halaman">
+    <button id="sebelumnya" type="button" onclick="pindahHalaman(-1)"
+            aria-label="Halaman sebelumnya" title="Sebelumnya" disabled>‹</button>
+    <button type="button" onclick="toggleMusik()" aria-label="Putar atau jeda musik"
+            title="Musik" id="tombolMusik">♫</button>
+    <button id="berikutnya" type="button" onclick="pindahHalaman(1)"
+            aria-label="Halaman berikutnya" title="Berikutnya">›</button>
+  </nav>
+
+  <!-- Musik opsional: letakkan music.mp3 sejajar dengan index.html. -->
+  <audio id="musikLatar" loop preload="none">
+    <source src="music.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    /* =========================================================
+       KONFIGURASI YANG BISA DIUBAH SENDIRI
+       1. TANGGAL_ACARA: format YYYY-MM-DDTHH:mm:ss
+       2. KOORDINAT_LAT dan KOORDINAT_LNG: koordinat Google Maps
+       3. URL_APPS_SCRIPT: isi jika ingin menyimpan RSVP ke Spreadsheet
+       ========================================================= */
+    const KONFIGURASI = {
+      tanggalAcara: "2026-12-26T10:00:00",
+      koordinatLat: "",   // Contoh: "-6.917500"
+      koordinatLng: "",   // Contoh: "107.619100"
+      urlAppsScript: ""   // Kosongkan sampai Google Apps Script siap
+    };
+
+    /* Tampilkan koordinat dan tautan Google Maps jika koordinat sudah diisi. */
+    function aturLokasi() {
+      const lat = String(KONFIGURASI.koordinatLat).trim();
+      const lng = String(KONFIGURASI.koordinatLng).trim();
+      const teks = document.getElementById("teksKoordinat");
+      const link = document.getElementById("tautanMaps");
+
+      if (lat && lng) {
+        teks.textContent = `Koordinat: ${lat}, ${lng}`;
+        link.href = `https://www.google.com/maps?q=${encodeURIComponent(lat + "," + lng)}`;
+        link.hidden = false;
+      } else {
+        teks.textContent = "Koordinat rumah belum diatur";
+        link.hidden = true;
+      }
+    }
+
+    /* Countdown diperbarui setiap detik. Waktu menggunakan zona lokal perangkat. */
+    function perbaruiCountdown() {
+      const target = new Date(KONFIGURASI.tanggalAcara).getTime();
+      const pesan = document.getElementById("pesanCountdown");
+
+      if (!KONFIGURASI.tanggalAcara || Number.isNaN(target)) {
+        pesan.textContent = "Tanggal acara belum diatur dengan benar.";
+        return;
+      }
+
+      const sisa = target - Date.now();
+      if (sisa <= 0) {
+        document.getElementById("hari").textContent = "0";
+        document.getElementById("jam").textContent = "00";
+        document.getElementById("menit").textContent = "00";
+        document.getElementById("detik").textContent = "00";
+        pesan.textContent = "Acara telah dimulai atau selesai.";
+        return;
+      }
+
+      document.getElementById("hari").textContent = Math.floor(sisa / 86400000);
+      document.getElementById("jam").textContent = String(Math.floor(sisa / 3600000) % 24).padStart(2, "0");
+      document.getElementById("menit").textContent = String(Math.floor(sisa / 60000) % 60).padStart(2, "0");
+      document.getElementById("detik").textContent = String(Math.floor(sisa / 1000) % 60).padStart(2, "0");
+      pesan.textContent = "Menuju hari bahagia.";
+    }
+
+    /* Tombol cover mengarah ke halaman 2. */
+    function bukaUndangan() {
+      document.getElementById("pembukaan").scrollIntoView({ behavior: "smooth" });
+      const musik = document.getElementById("musikLatar");
+      musik.play().then(perbaruiTombolMusik).catch(() => {});
+    }
+
+    /* Navigasi halaman. */
+    const halaman = Array.from(document.querySelectorAll(".page"));
+    let halamanAktif = 0;
+
+    function perbaruiNavigasi() {
+      document.getElementById("sebelumnya").disabled = halamanAktif === 0;
+      document.getElementById("berikutnya").disabled = halamanAktif === halaman.length - 1;
+    }
+
+    function pindahHalaman(arah) {
+      const tujuan = halamanAktif + arah;
+      if (tujuan < 0 || tujuan >= halaman.length) return;
+      halaman[tujuan].scrollIntoView({ behavior: "smooth" });
+    }
+
+    const pengamat = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          halamanAktif = halaman.indexOf(entry.target);
+          perbaruiNavigasi();
+        }
+      });
+    }, { threshold: 0.6 });
+    halaman.forEach((item) => pengamat.observe(item));
+
+    /* Musik opsional. */
+    const musik = document.getElementById("musikLatar");
+    const tombolMusik = document.getElementById("tombolMusik");
+
+    function perbaruiTombolMusik() {
+      tombolMusik.textContent = musik.paused ? "♫" : "Ⅱ";
+      tombolMusik.setAttribute("aria-label", musik.paused ? "Putar musik" : "Jeda musik");
+    }
+
+    function toggleMusik() {
+      if (musik.paused) {
+        musik.play().then(perbaruiTombolMusik).catch(() => {
+          alert("Musik belum bisa diputar. Pastikan file music.mp3 tersedia.");
+        });
+      } else {
+        musik.pause();
+        perbaruiTombolMusik();
+      }
+    }
+    musik.addEventListener("play", perbaruiTombolMusik);
+    musik.addEventListener("pause", perbaruiTombolMusik);
+
+    /* RSVP:
+       Jika URL_APPS_SCRIPT kosong, formulir hanya menampilkan data yang diisi
+       dan belum menyimpan ke database/Spreadsheet. Isi URL setelah endpoint siap. */
+    document.getElementById("formRSVP").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const form = event.currentTarget;
+      const status = document.getElementById("statusRSVP");
+      const tombol = document.getElementById("tombolRSVP");
+      if (!form.reportValidity()) return;
+
+      const data = {
+        nama: document.getElementById("namaRSVP").value.trim(),
+        kehadiran: document.getElementById("kehadiran").value,
+        pesan: document.getElementById("pesanRSVP").value.trim()
+      };
+
+      if (!KONFIGURASI.urlAppsScript) {
+        status.textContent = "Form berhasil diisi, tetapi penyimpanan belum aktif. Hubungkan URL Google Apps Script agar jawaban tersimpan.";
+        return;
+      }
+
+      tombol.disabled = true;
+      status.textContent = "Mengirim konfirmasi...";
+      try {
+        await fetch(KONFIGURASI.urlAppsScript, {
+          method: "POST",
+          mode: "no-cors",
+          body: new URLSearchParams(data)
+        });
+        status.textContent = "Permintaan terkirim. Periksa Spreadsheet untuk memastikan jawaban tersimpan.";
+        form.reset();
+      } catch (error) {
+        status.textContent = "Gagal mengirim. Periksa koneksi dan URL Google Apps Script.";
+      } finally {
+        tombol.disabled = false;
+      }
+    });
+
+    aturLokasi();
+    perbaruiCountdown();
+    setInterval(perbaruiCountdown, 1000);
+    perbaruiNavigasi();
+  </script>
+</body>
+</html>
